@@ -1,0 +1,3 @@
+django-appconf==1.0.2
+pytz==2016.4
+-e git+https://github.com/bzeniti/custom-djangouser-account#egg=custom-djangouser-account
