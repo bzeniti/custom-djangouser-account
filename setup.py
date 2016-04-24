@@ -4,14 +4,14 @@ import account
 
 
 setup(
-    name="django-user-accounts",
+    name="custom-djangouser-account",
     version=account.__version__,
-    author="Brian Rosner",
-    author_email="brosner@gmail.com",
+    author="Modified",
+    author_email="modified",
     description="a Django user account app",
     long_description=open("README.rst").read(),
-    license="MIT",
-    url="http://github.com/pinax/django-user-accounts",
+    license="",
+    url="https://github.com/bzeniti/custom-djangouser-account",
     packages=find_packages(),
     install_requires=[
         "django-appconf>=1.0.1",
