@@ -1,4 +1,0 @@
-include README.rst
-include runtests.py
-recursive-include account/locale *
-recursive-include docs Makefile conf.py *.rst
