@@ -37,11 +37,11 @@ class SignupForm(forms.Form):
         required=True
     )
     password = forms.CharField(
-        label=_("Password"),
+        label=_("Senha"),
         widget=forms.PasswordInput(render_value=False)
     )
     password_confirm = forms.CharField(
-        label=_("Password (again)"),
+        label=_("Senha (novamente)"),
         widget=forms.PasswordInput(render_value=False)
     )
 
@@ -61,14 +61,14 @@ class SignupForm(forms.Form):
         qs = User.objects.filter(**lookup_kwargs)
         if not qs.exists():
             return self.cleaned_data["username"]
-        raise forms.ValidationError(_("This username is already taken. Please choose another."))
+        raise forms.ValidationError(_("Este nome de usuário já está sendo utilizado. Por favor escolha um outro."))
 
     def clean_email(self):
         value = self.cleaned_data["email"]
         qs = EmailAddress.objects.filter(email__iexact=value)
         if not qs.exists() or not settings.ACCOUNT_EMAIL_UNIQUE:
             return value
-        raise forms.ValidationError(_("A user is registered with this email address."))
+        raise forms.ValidationError(_("Um usuário já está registrado com esse email."))
 
     def clean(self):
         if "password" in self.cleaned_data and "password_confirm" in self.cleaned_data:
@@ -80,11 +80,11 @@ class SignupForm(forms.Form):
 class LoginForm(forms.Form):
 
     password = forms.CharField(
-        label=_("Password"),
+        label=_("Senha"),
         widget=forms.PasswordInput(render_value=False)
     )
     remember = forms.BooleanField(
-        label=_("Remember Me"),
+        label=_("Lembrar"),
         required=False
     )
     user = None
@@ -109,7 +109,7 @@ class LoginForm(forms.Form):
 class LoginUsernameForm(LoginForm):
 
     username = forms.CharField(label=_("Username"), max_length=30)
-    authentication_fail_message = _("The username and/or password you specified are not correct.")
+    authentication_fail_message = _("O usuário ou senha especificados não estão corretos.")
     identifier_field = "username"
 
     def __init__(self, *args, **kwargs):
@@ -124,7 +124,7 @@ class LoginUsernameForm(LoginForm):
 class LoginEmailForm(LoginForm):
 
     email = forms.EmailField(label=_("Email"))
-    authentication_fail_message = _("The email address and/or password you specified are not correct.")
+    authentication_fail_message = _("O endereço de email ou senha não estão corretos.")
     identifier_field = "email"
 
     def __init__(self, *args, **kwargs):
@@ -157,13 +157,13 @@ class ChangePasswordForm(forms.Form):
 
     def clean_password_current(self):
         if not self.user.check_password(self.cleaned_data.get("password_current")):
-            raise forms.ValidationError(_("Please type your current password."))
+            raise forms.ValidationError(_("Por favor digite a sua senha."))
         return self.cleaned_data["password_current"]
 
     def clean_password_new_confirm(self):
         if "password_new" in self.cleaned_data and "password_new_confirm" in self.cleaned_data:
             if self.cleaned_data["password_new"] != self.cleaned_data["password_new_confirm"]:
-                raise forms.ValidationError(_("You must type the same password each time."))
+                raise forms.ValidationError(_("Você deve digitar a mesma senha."))
         return self.cleaned_data["password_new_confirm"]
 
 
@@ -174,7 +174,7 @@ class PasswordResetForm(forms.Form):
     def clean_email(self):
         value = self.cleaned_data["email"]
         if not EmailAddress.objects.filter(email__iexact=value).exists():
-            raise forms.ValidationError(_("Email address can not be found."))
+            raise forms.ValidationError(_("Endereço de email não foi encontrado."))
         return value
 
 
@@ -192,7 +192,7 @@ class PasswordResetTokenForm(forms.Form):
     def clean_password_confirm(self):
         if "password" in self.cleaned_data and "password_confirm" in self.cleaned_data:
             if self.cleaned_data["password"] != self.cleaned_data["password_confirm"]:
-                raise forms.ValidationError(_("You must type the same password each time."))
+                raise forms.ValidationError(_("Digite o mesmo email."))
         return self.cleaned_data["password_confirm"]
 
 
@@ -218,4 +218,4 @@ class SettingsForm(forms.Form):
         qs = EmailAddress.objects.filter(email__iexact=value)
         if not qs.exists() or not settings.ACCOUNT_EMAIL_UNIQUE:
             return value
-        raise forms.ValidationError(_("A user is registered with this email address."))
+        raise forms.ValidationError(_("Um usuário já está registrado com este email."))
