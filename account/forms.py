@@ -204,6 +204,7 @@ class SettingsForm(forms.Form):
         choices=[("", "---------")] + settings.ACCOUNT_TIMEZONES,
         required=False
     )
+    bio = forms.CharField(label=_("bio"), max_length=100)
     if settings.USE_I18N:
         language = forms.ChoiceField(
             label=_("Language"),

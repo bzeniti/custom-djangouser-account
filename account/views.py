@@ -752,6 +752,13 @@ class SettingsView(LoginRequiredMixin, FormView):
     def update_settings(self, form):
         self.update_email(form)
         self.update_account(form)
+        self.update_bio(form) ##04/12
+		
+    def update_bio(self, form):   #04/12
+        cd = form.cleaned_data
+        user = self.request.user
+        user.profile.bio = cd["bio"] 
+        user.save()
 
     def update_email(self, form, confirm=None):
         user = self.request.user
@@ -795,7 +802,8 @@ class SettingsView(LoginRequiredMixin, FormView):
         if fallback_url is None:
             fallback_url = settings.ACCOUNT_SETTINGS_REDIRECT_URL
         kwargs.setdefault("redirect_field_name", self.get_redirect_field_name())
-        return default_redirect(self.request, fallback_url, **kwargs)
+        return default_redirect(self.request, fallback_url, **kwargs)		
+
 
 
 class DeleteView(LogoutView):
