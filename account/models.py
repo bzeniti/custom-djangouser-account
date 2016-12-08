@@ -385,3 +385,4 @@ class AccountDeletion(models.Model):
         account_deletion.save()
         settings.ACCOUNT_DELETION_MARK_CALLBACK(account_deletion)
         return account_deletion
+		
